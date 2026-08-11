@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+{% load static %}
+
+
+
+
+{% block content %}
+<form method="post" action ="" style="color:rgb(14, 9, 21)">
+    {% csrf_token %}
+    {% if messages %}
+    {% for mensaje in messages %}
+        <span class="alert alert-danger">{{ mensaje}}</span>
+    {% endfor %}
+    {% endif %}
+    <br><br>
+    {{form}}
+    <button type="submit" class="btn btn-sucess">Login</button>
+</form>
+ 
+
+{% endblock %}
+
+ 

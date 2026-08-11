@@ -1,0 +1,145 @@
+{% extends "master.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2  style="width: 50%; margin: 0 auto; background-color: rgb(165, 91, 91);">Calendarios de Cosecha {{eleccion}} </h2>
+{% load static %}
+{% if mymembers %}
+     <h3> SIN MODIFICACION EL CALENDARIO </h2>   
+
+   {% else %}
+        <form action="/crearca/" method="GET">
+                AÑO DE REALIZACION DEL CALENDARIO
+                <input type="number" name="ANIO" value="{{eleccion}}" style="width:60px" / readonly>
+                 Semanas maxima
+                <input type="number" min="52" max="53" name="tope" value="52" style="width:40px" / >
+                 Semanas maxima del año anterior
+                <input type="number" min="52" max="53" name="topea" value="52" style="width:40px" / >
+                 
+                 
+                <label for="opciones">Elige El color de Embolse de la semana 1:</label>
+                <select name="opciones" id="opciones">
+                    <option value="valor01">Blanca (predeterminada)</option>
+                    <option style="background-color:yellow" value="valor02" selected>Amarilla </option>
+                    <option style="background-color: black" value="valor03">Negra</option>
+                    <option style="background-color: red" value="valor04">Roja</option>
+                    <option style="background-color: grey" value="valor05">Gris</option>
+                    <option style="background-color: green" value="valor06">Verde</option>
+                    <option style="background-color: magenta" value="valor07">Lila</option>
+                    <option style="background-color: brown" value="valor08">Cafe</option>
+                    <option style="background-color: orange" value="valor09">Naranja</option>
+                    <option style="background-color: blue" value="valor10">Azul</option>
+                </select>
+                <input type="submit" value="Enviar">
+                </form>
+                {% csrf_token %}
+        </form>
+
+   
+    
+{% endif %}
+
+<style>
+  table {
+    border-collapse: collapse; /* Líneas simples, no dobles */
+    width: 30%;
+  }
+  table, th, td {
+    border: 1px solid black; /* Estilo y grosor de la línea */
+  }
+  th, td {
+    padding: 10px; /* Espaciado interno */
+    text-align: left;
+  }
+
+  black { border: 1px solid black; /* Estilo y grosor de la línea */}
+</style>
+
+            <table id="ejemplo_list" class="table table-striped ">
+
+                <thead>
+                    <tr bgcolor="#bee5eb">
+                       
+                        <th class="text-center" width="10%">SEMANA</th>
+                        <th class="text-center" width="20%">COLOR</th>
+                   </tr>
+                </thead>
+                <tbody>
+                {% for ejemplo in mymembers  %}
+                    <tr class="text-center">
+                       
+                        
+                        <td align="left">{{ ejemplo.semana }}</td>
+                        {% if ejemplo.color == "negra" %}
+
+                           <td bgcolor="black">{{ ejemplo.color }}</td>
+
+                        {% endif %}
+                        {% if ejemplo.color == "roja" %}
+
+                           <td bgcolor="red">{{ ejemplo.color }}</td>
+                           
+                        {% endif %}
+                        {% if ejemplo.color == "gris" %}
+
+                           <td bgcolor="gray">{{ ejemplo.color }}</td>
+
+                        {% endif %}
+                        {% if ejemplo.color == "verde" %}
+
+                           <td bgcolor="green">{{ ejemplo.color }}</td>
+                           
+                        {% endif %}
+                        {% if ejemplo.color == "lila" %}
+
+                           <td bgcolor="magenta">{{ ejemplo.color }}</td>
+
+                        {% endif %}
+                        {% if ejemplo.color == "cafe" %}
+
+                           <td bgcolor="brown">{{ ejemplo.color }}</td>
+                           
+                        {% endif %}
+
+                        {% if ejemplo.color == "naranja" %}
+
+                           <td bgcolor="orange">{{ ejemplo.color }}</td>
+
+                        {% endif %}
+                        {% if ejemplo.color == "azul" %}
+
+                           <td bgcolor="blue">{{ ejemplo.color }}</td>
+                           
+                        {% endif %}
+                        {% if ejemplo.color == "blanca" %}
+
+                           <td bgcolor="white">{{ ejemplo.color }}</td>
+
+                        {% endif %}
+                        {% if ejemplo.color == "amarilla" %}
+
+                           <td bgcolor="yellow">{{ ejemplo.color }}</td>
+                           
+                        {% endif %}
+
+
+
+                       
+                    </tr>
+                 {% empty %}
+                 <h2> SIN DATOS EL CALENDARIO </h2>    
+                {% endfor %}
+                </tbody>
+            </table>
+</body>
+
+<a class="btn btn-secondary" href="/anios" role="button">Anterior</a>
+
+</html>
+{% endblock %}
+
+  
+   

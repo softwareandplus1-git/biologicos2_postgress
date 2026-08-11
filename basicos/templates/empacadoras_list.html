@@ -1,0 +1,125 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/biologico/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+	 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+
+
+<h2>empacadoras  </h2>
+{% load static %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
+
+ {% if  user.is_superuser %} 
+<a class="btn btn-primary " href="agrega" role="button">Agregar Nuevos</a>
+
+
+
+ {% endif %} 
+ 
+<a class="btn btn-info "  href="#' %}" role="button">Exportar CSV</a>
+<a class="btn btn-info" href="#' %}" role="button">Exportar ins PDF</a>
+ 
+
+<table id="ejemplo_list" class="table table-striped ">
+
+                <thead>
+                    <tr bgcolor="#bee5eb">
+                        <th class="text-center" width="5%">#</th>
+                        <th class="text-center" width="20%">Unidad De Empaque</th>
+                        <th class="text-center" width="20%" >Unidad De Cosecha A</th>
+                        <th class="text-center" width="20%" >sin acciones </th>
+
+                        
+                    </tr>
+                </thead>
+                 <tbody>
+                {% for ejemplo in mymembers  %}
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                        
+                        <td align="left">{{ejemplo.id}} {{ ejemplo.nombre }} {{ ejemplo.abreviatura }}</td>
+                        <td>
+                        {% for cosechas in mycosechas %}
+                            
+                           {% for empaques in cosechas.empaque.all %}
+                              {% if ejemplo.nombre == empaques.nombre %} 
+                                 {{ cosechas.abreviatura }}
+                              {% endif %}   
+                           {% endfor %}
+                        {% endfor %}   
+                        </td>  
+                           
+                       
+                       
+                        <td>
+            <!-- Botón para acción JavaScript -->
+            {% if ejemplo.id == actualizae %}
+                 <a href="{{ejemplo.id}}/activa" title="activa" type="button" class="btn btn-success">Activado para  captura Cosecha </a>   
+            {% else %}      
+           
+              <a href="{{ejemplo.id}}/activa" title="activa" type="button" class="btn btn-primary">Activar captura Cosecha </a>  
+             {% endif %}    
+           {% if  user.is_superuser %} 
+             
+             <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
+             
+             <a href="{{ejemplo.id}}/borrar" title="borrar" type="button" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este producto?');">
+ Borrar
+</a>
+           
+            {% endif %}   
+
+           </td>
+                      
+                       
+                    </tr>
+                {% endfor %}
+                </tbody>
+</table>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+            
+ <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
+            
+
+
+
+
+  <script type="text/javascript">
+
+        new DataTable('#ejemplo_list',{
+            layout: {
+        top9Start: {
+            div: {
+                className: 'layout-start',
+                text: 'Paginado'
+            }
+        },},},
+        )
+    </script>
+
+    <script>
+        document.getElementById('miBotonJS').addEventListener('click', function() {
+            alert('¡Has hecho clic en el botón de JS!');
+        });
+
+        document.getElementById('eliminar').addEventListener('click', function() {
+            alert('¡Has hecho clic en el eliminar  JS!');
+            
+        });
+    </script>
+
+    
+   
+
+{% endblock %}

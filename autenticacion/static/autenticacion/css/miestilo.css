@@ -1,0 +1,48 @@
+
+    /* Estilo interno */
+    body {
+      font-family: sans-serif; /* Usa una fuente sans-serif por defecto */
+      margin: 20px;
+       background-color: #d8da3d 
+    }
+    h1 {
+      color: navy; /* Título de color azul marino */
+    }
+    .importante {
+      font-weight: bold; /* Texto en negrita */
+      color: rgb(45, 21, 21); /* Texto rojo oscuro */
+    }
+    p::first-line {
+      font-style: italic; /* La primera línea del párrafo será cursiva */
+     
+      color: blue; /* El texto de todos los párrafos será azul */
+    }
+
+    ul {
+  list-style-type: square;
+  margin: 0;
+  padding: 0;
+  background-color: #1b6e30;
+  display: flex;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #a93434;
+}
+
+tr {
+    border-bottom: 2px solid #dddddd;
+}
+
+td {
+    padding: 12px 15px; /* Espaciado interno en las celdas */
+}
+
+

@@ -1,0 +1,35 @@
+{% extends "master.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2  style="width: 50%; margin: 0 auto; background-color: rgb(165, 91, 91);">Calendarios de Cosecha </h2>
+{% load static %}
+
+
+{% if  user.is_superuser %} 
+
+  {% for x in anexo %}
+ 
+ <div style="width: 50%; margin: 0 auto; background-color: rgb(165, 91, 91);">
+   
+	
+    <ul>
+  <li style="font-weight: 600" ;> {{ x }}</li>
+   <a style="color :blue" href = "/{{x}}/crear" class="btn btn-success btn-sm">&nbsp;Crear&nbsp;&nbsp; </a>
+   <a style="color :red" href = "#" class="btn btn-success btn-sm">Eliminar </a>
+						     
+  
+</ul>
+ 
+</div>
+  {% endfor %}
+  {% else %}
+  <li style="font-weight: 600" ;> {{ x }}</li>
+     <a style="color :rgb(0, 85, 255)" href = "/visualca" class="btn btn-success btn-sm">Visualizar </a>
+  {% endif %}
+{% endblock %}
+
+
+

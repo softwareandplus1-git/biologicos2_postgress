@@ -1,0 +1,273 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/biologico/css/bootstrap-grid.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+	 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+
+     
+
+<h2>CAPTURA DE ENCINTADO  semana actual :{{sema_asi}} </h2>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
+<a class="btn btn-secondary" href="/diariocosechas/" role="button">Anterior</a>
+ {% if  user.is_superuser %} 
+
+
+ {% endif %} 
+<table id="ejemplo_list" class="table table-striped ">
+
+                <thead>
+                       
+                    </tr>
+                     <tr >
+                        <th class="text-center">#</th>
+                        <th class="text-center" width="15%">Edad de la fruta</th>
+                          {% for ccolo2 in lcl2  %}
+                           <th class="text-right" width="10%">{{ccolo2}} </th>
+                           {% endfor %} 
+                       
+                        
+                        <th class="text-center" width="10%">#</th>
+                       
+                    </tr>
+                    <tr bgcolor="#bee5eb">
+                        <td class="text-center">#</td>
+                        <td class="text-center" width="15%">Embolsados Totales</td>
+                          {% for ccolo3 in lcl3  %}
+                           <th >{{ccolo3}} </th>
+                           {% endfor %} 
+                       
+                        
+                        <td class="text-center" width="10%"># </td>
+                       
+                    </tr>
+                     <tr bgcolor="#bee5eb">
+                        <th class="text-center">#</th>
+                        <th class="text-center" width="15%">Cosechados Totales</th>
+                          {% for ccolo4 in lcl4  %}
+                           <th class="text-center" width="10%">{{ccolo4}} </th>
+                           {% endfor %} 
+                       
+                        
+                        <th class="text-center" width="10%"># </th>
+                       
+                    </tr>
+                     <tr bgcolor="#0000FF">
+                        <th class="text-center">#</th>
+                        <th class="text-center" width="15%">Saldos Actuales</th>
+                          {% for ccolo5 in lcl5  %}
+                           <th class="text-center" width="10%">{{ccolo5}} </th>
+                           {% endfor %} 
+                       
+                        
+                        <th class="text-center" width="10%"># </th>
+                       
+                    </tr>
+
+                        <tr bgcolor="#bee5eb">
+                        <th class="text-center">#</th>
+                        <th class="text-center" width="20%">Unidad De cosecha</th>
+                          {% for ccolo in lcl  %}
+                           <th class="text-center" width="10%">{{ccolo}} </th>
+                           {% endfor %} 
+                       
+                        
+                       
+
+                </thead>
+                 <tbody>
+                {% for ejemplo in mymembers  %}
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                        
+                        <td align="left">Encintado {{ ejemplo.nombre }}</td>
+                        {% for key, value in c8.items %}
+                            {% if ejemplo.nombre == key %}
+                           
+                            <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                         {% for key, value in c9.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, value in c10.items %}
+                            {% if ejemplo.nombre == key %}
+                            <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                         {% for key, value in c11.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                         {% for key, value in c12.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, value in c13.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, value in c14.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                        {% for key, value in c15.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th class="text-center" width="10%">{{ value }} </th>
+                            {% endif %}
+                        {% endfor %}
+                                            
+                        <td>
+            <!-- Botón para acción JavaScript -->
+           {% if  user.is_superuser %} 
+             
+             <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
+             
+             <a href="{{ejemplo.id}}/borrar" title="borrar" type="button" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este producto?');">
+ Borrar
+</a>
+            {% else %} 
+                <p>#Encintado </p>
+            {% endif %}   
+
+                      
+                       
+            </tr>
+             <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                       
+                        <td align="left">cosechado</td>
+
+                        {% for edadocho in rr8 %}
+                            {% if ejemplo.id == edadocho.uncosecha %}
+                            <th><strong> {{ edadocho.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edadnueve in rr9 %}
+                            {% if ejemplo.id == edadnueve.uncosecha %}
+                            <th><strong> {{ edadnueve.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edaddiez in rr10 %}
+                            {% if ejemplo.id == edaddiez.uncosecha %}
+                            <th><strong> {{ edaddiez.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edadonce in rr11 %}
+                            {% if ejemplo.id == edadonce.uncosecha %}
+                            <th><strong> {{ edadonce.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                         {% for edaddoce in rr12 %}
+                            {% if ejemplo.id == edaddoce.uncosecha %}
+                            <th><strong> {{ edaddoce.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edadtrece in rr13 %}
+                            {% if ejemplo.id == edadtrece.uncosecha %}
+                            <th><strong> {{ edadtrece.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edadcatorce in rr14 %}
+                            {% if ejemplo.id == edadcatorce.uncosecha %}
+                            <th><strong> {{ edadcatorce.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+
+                        {% for edadquince in rr15 %}
+                            {% if ejemplo.id == edadquince.uncosecha %}
+                            <th><strong> {{ edadquince.total_bolsas }}</th>
+                            {% endif %}    
+                          
+                        {% endfor %}
+                        </tr> 
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                       
+                        <td align="right">Saldo </td>
+
+                        {% for key, value in sas8.items %}
+                            {% if ejemplo.nombre == key %}
+                            <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas9.items %}
+                            {% if ejemplo.nombre == key %}
+                              <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas10.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas11.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas12.items %}
+                            {% if ejemplo.nombre == key %}
+                             <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas13.items %}
+                            {% if ejemplo.nombre == key %}
+                              <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas14.items %}
+                            {% if ejemplo.nombre == key %}
+                              <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for key, value in sas15.items %}
+                            {% if ejemplo.nombre == key %}
+                              <th><strong> {{ value }}</th>
+                            {% endif %}
+                        {% endfor %}
+                        </tr>
+
+
+           </td>
+          
+                    
+                {% endfor %}
+                </tbody>
+</table>
+{% endblock %}

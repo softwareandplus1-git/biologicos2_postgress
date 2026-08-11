@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>S_AND_PLUS BIO.0.0.1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="\static\autenticacion\css\miestilo.css">
+
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+  <h1>Reporte de Inventarios Biologicos </h1>
+   <ul>
+  <li><a href="/" class="active">Home</a></li>
+  <li><a href="/anios/">Calendario</a></li>
+  <li><a href="/empacadoras/">unidades de Empaque</a></li>
+  <li><a href="/cosechas/">unidades de Cosecha</a></li>
+  <li><a href="/embolse/">Digitalizacion de Embolses</a></li>
+  <li><a href="/diariocosechas/">Digitalizacion de Cosecha Diaria </a></li>
+
+
+  
+
+  
+ 
+</ul>
+
+
+{% if user.is_authenticated %}
+    <p>Hi, {{user.username}} :)</p>
+    {% if user.is_superuser %}
+       <a href="{%url 'registro' %}" >Dar altas Nuevos USUARIOS </a>
+    {% endif %}
+     <a class="btn btn-primary" href="/actual/" role="button">Actualiza semana</a>
+     <li style="float:right"><a href = "{% url 'cerrar_sesion' %}"">Cerrar Sesion </a></li>
+{% else %}
+    <p>You are not logged in  {{user.userfirstname}} </p>
+    <a href="{%url 'logear' %}" >AUTENTIFICATE PARA OBTENER DATOS </a>
+
+
+{% endif %}
+<hr>
+{% block content %}
+{% endblock %}
+
+<p>fin de la pagina </p>
+

@@ -1,0 +1,19 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Agregando Unidades de Cosecha </h2>
+    
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Grabar Nuevo " />
+</form>
+<a class="btn btn-secondary" href="/cosechas" role="button">ANTERIOR</a>
+
+{% endblock %}

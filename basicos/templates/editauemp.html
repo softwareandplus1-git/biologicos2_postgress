@@ -1,0 +1,53 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<h3> {{ anexo }} </h3>
+
+
+
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+
+
+ 
+
+
+
+   
+   <form action="/updateuemp/" method="POST">
+                eleccion
+                <input type="number" name="eleccion" value="{{eleccion}}" style="width:60px" / readonly>
+                Nombre Unidad de Empaque
+                <input type="text" name="nombre_ue"  value="{{nombreue}}"  style="width:200px" / >
+                 Abreviatura para Reportes
+                <input type="text" name="abrevia_ue" value="{{abreviaue}}" style="width:60px" / >
+                 
+        <input type="submit" value="Aceptar ">
+        <input type="reset" value="Borrar información">
+        {% csrf_token %}
+    </form>
+
+<a class="btn btn-secondary" href="/empacadoras" role="button">ANTERIOR</a>
+
+ {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock  %}
+
+
+
+
+
+
+
+

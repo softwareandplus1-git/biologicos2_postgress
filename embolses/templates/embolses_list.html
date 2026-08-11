@@ -1,0 +1,187 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/biologico/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+	 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+
+
+<h2>CAPTURA DE ENCINTADO  semana actual :{{sema_asi}} - {{sema_anio}} </h2>
+
+{% load static %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
+
+ {% if  user.is_superuser %} 
+
+
+ {% endif %} 
+
+ {% if asignado == 'azul' %}
+    
+    <h2 style="background-color: blue;">{{ asignado }} </h2>
+
+{% endif %}
+
+{% if asignado == 'roja' %}
+    
+    <h2 style="background-color: rgb(255, 0, 0);">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'amarilla' %}
+    
+    <h2 style="background-color: yellow;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'negra' %}
+    
+    <h2 style="background-color: black;">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'gris' %}
+    
+    <h2 style="background-color: gray;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'verde' %}
+    
+    <h2 style="background-color: green;">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'lila' %}
+    
+    <h2 style="background-color: rgb(163, 11, 163);">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'cafe' %}
+    
+    <h2 style="background-color: brown;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'blanca' %}
+    
+    <h2 style="background-color: rgb(211, 207, 207);color:white">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'naranja' %}
+    
+    <h2 style="background-color: orange;">{{ asignado }}</h2>
+
+{% endif %}
+
+
+
+
+
+
+ <form method="post">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+</form>
+ 
+<a class="btn btn-info "  href="listado" role="button">Listado General</a>
+<a class="btn btn-info" href="#' %" role="button">Exportar ins PDF</a>
+<a class="btn btn-info"  href="saldos" role="button">Saldos Fruta in PDF</a>
+ 
+
+<table id="ejemplo_list" class="table table-striped ">
+
+                <thead>
+                    <tr bgcolor="#bee5eb">
+                        <th class="text-center">#</th>
+
+                        <th class="text-center" width="20%">Unidad De cosecha</th>
+                        <th class="text-left" width="10%">semana</th>
+                        <th class="text-center" width="10%">Color</th>
+                        <th class="text-center" width="10%">Encintado</th>
+                        
+                        <th class="text-center" width="20%">ACCIONES </th>
+                       
+                    </tr>
+                </thead>
+                 <tbody>
+                {% for ejemplo in mymembers  %}
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                        
+                        <td align="left">{{ ejemplo.uncosecha.nombre }}</td>
+                        <td>{{ ejemplo.semana }}</td>
+                        <td>{{ ejemplo.color }}</td>
+                        <td>{{ ejemplo.bolsas }}</td>
+                       
+                       
+                        <td>
+            <!-- Botón para acción JavaScript -->
+           {% if  user.is_superuser %} 
+             
+             <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
+             
+             <a href="{{ejemplo.id}}/borrar" title="borrar" type="button" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este producto?');">
+ Borrar
+</a>
+            {% else %} 
+                <p>SIN ACCIONES </p>
+            {% endif %}   
+
+           </td>
+                      
+                       
+                    </tr>
+                {% endfor %}
+                </tbody>
+</table>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+            
+ <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
+            
+
+
+
+
+  <script type="text/javascript">
+
+        new DataTable('#ejemplo_list',{
+            layout: {
+        top9Start: {
+            div: {
+                className: 'layout-start',
+                text: 'Paginado'
+            }
+        },},},
+        )
+    </script>
+
+    <script>
+        document.getElementById('miBotonJS').addEventListener('click', function() {
+            alert('¡Has hecho clic en el botón de JS!');
+        });
+
+        document.getElementById('eliminar').addEventListener('click', function() {
+            alert('¡Has hecho clic en el eliminar  JS!');
+            
+        });
+    </script>
+
+    
+   
+
+{% endblock %}
