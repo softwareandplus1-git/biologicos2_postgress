@@ -75,14 +75,14 @@ WSGI_APPLICATION = 'biologico.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
+import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'biologico',
-        'USER': 'postgres',
-        'PASSWORD': 'CHILANGO2012',
-        'HOST': 'localhost',
+        'NAME': os.getenv('DB_NAME','biologico'),
+        'USER': os.getenv('DB_USER','postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST','localhost'),
         'PORT': '5432',
     }}
 
