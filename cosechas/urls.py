@@ -8,9 +8,6 @@ urlpatterns = [
       path('diariocosechas/', views.dia_cosecha, name='dia_cosecha'),
       path('diariocosechas/saldos_cosecha/', views.saldosfruta2, name='saldos_cosecha'),
       path('diariocosechas/<int:pk>/borrar', views.borrarcdia, name='borrarcosechadia'),
-    #  path('diariocosechas/cosechas/', views.cosechas, name='cosechas'),
-    #  path('empacadoras/<int:pk>/borrar', views.borrauemp, name='borraremp'),
-      #path('saldosembolse/', views.embolse, name='saldosembolse'),
     
    
     

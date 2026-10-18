@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import diacosechas
 from basicos.models import ucosecha,calendario,actual
 from embolses.models import embolses
+from usuarios.models import diusuarios
 from datetime import datetime, timedelta
 from datetime import date
 from django.views.generic import ListView,CreateView, DeleteView, UpdateView
@@ -31,7 +32,17 @@ def dia_cosecha(request):
     coloriy=0
     valores_iniciales={'your_cantidad8':0,'your_cantidad9':0,'your_cantidad10':0,'your_cantidad11':0,
                        'your_cantidad12':0,'your_cantidad13':0,'your_cantidad14':0,'your_cantidad15':0}
+    
     form = DiariocosechaForm(initial=valores_iniciales)
+    nombrecaptura=request.session['nombreusu'] 
+    ucaptura=diusuarios.objects.filter(nombre=nombrecaptura)
+
+    
+
+    for ucap in ucaptura:
+        claveusu=ucap.id
+    
+    
     actualiza=actual.objects.filter(usuario=request.user)
     for actualiza1 in actualiza:
         colorin=actualiza1.actual_semana
@@ -106,6 +117,7 @@ def dia_cosecha(request):
         form = DiariocosechaForm(request.POST)
         nanio=form.data['your_ucosecha']
         nanie=ucosecha.objects.get(pk=nanio)
+        claveuok=diusuarios.objects.get(pk=claveusu)
         diase=form.data['diassemana']
         print (diase)
         #print(nanio,nanie)
@@ -121,7 +133,9 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad8'],
                         uncosecha=nanie,
-                        diasemana=diase)
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                     )
                         
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
@@ -132,7 +146,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad9'],
                         uncosecha=nanie,
-                        diasemana=diase)
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                          )
+                                                
 
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
@@ -143,8 +160,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad10'],
                         uncosecha=nanie,
-                        diasemana=diase)
-                        
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                                 )
+                                                
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
                         color=lista_coloresa[72:89],
@@ -154,8 +173,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad11'],
                         uncosecha=nanie,
-                        diasemana=diase)
-                     
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                            )
+                                                
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
                         color=lista_coloresa[90:107],
@@ -166,7 +187,9 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad12'],
                         uncosecha=nanie,
-                        diasemana=diase)
+                        diasemana=diase,uncapturista=claveuok
+                                                 )
+                                                
                         
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
@@ -176,8 +199,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad13'],
                         uncosecha=nanie,
-                        diasemana=diase)
-
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                               )
+                                                
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
                         color=lista_coloresa[126:143],
@@ -188,8 +213,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad14'],
                         uncosecha=nanie,
-                        diasemana=diase)
-                        
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                                 )
+                                                
                      nuevo_usuario = diacosechas.objects.create(anio=coloriy,
                         semana=colorin,
                         color=lista_coloresa[144:161],
@@ -199,12 +226,10 @@ def dia_cosecha(request):
                         fecha=ahora,
                         bolsas=form.data['your_cantidad15'],
                         uncosecha=nanie,
-                        diasemana=diase)
-
-
-
-
-
+                        diasemana=diase,
+                        uncapturista=claveuok
+                                                 )
+                                                
            
           # nuevo_usuario.save()
         return redirect('/diariocosechas/') 

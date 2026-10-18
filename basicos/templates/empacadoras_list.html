@@ -17,16 +17,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
 
- {% if  user.is_superuser %} 
+     {% if user.is_authenticated %} 
 <a class="btn btn-primary " href="agrega" role="button">Agregar Nuevos</a>
 
 
 
  {% endif %} 
  
-<a class="btn btn-info "  href="#' %}" role="button">Exportar CSV</a>
-<a class="btn btn-info" href="#' %}" role="button">Exportar ins PDF</a>
+<a class="btn btn-info "  href="#' " role="button">Exportar CSV</a>
+<a class="btn btn-info" href="#' " role="button">Exportar ins PDF</a>
+    {% if user.is_authenticated %} 
+    
  
+
 
 <table id="ejemplo_list" class="table table-striped ">
 
@@ -67,9 +70,10 @@
            
               <a href="{{ejemplo.id}}/activa" title="activa" type="button" class="btn btn-primary">Activar captura Cosecha </a>  
              {% endif %}    
+              <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
+            
            {% if  user.is_superuser %} 
              
-             <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
              
              <a href="{{ejemplo.id}}/borrar" title="borrar" type="button" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este producto?');">
  Borrar
@@ -88,8 +92,16 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
-            
- <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
+
+ {% else %}           
+
+   <h1>NECESITA AUTENTIFICAR UN USUARIO </h1>
+    <p>Lo sentimos, la página que buscas es con USUARIO AUTORIZADO .</p>
+    
+ 
+
+{% endif %}            
+            <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
             
 
 

@@ -12,6 +12,11 @@ def main(request):
   template = loader.get_template('main.html')
   string2=request.user
   string1 = "Hello World"
+  request.session['nombreusu'] = 'NINGUNO'
+  request.session['accesousu'] = 'NINGUNO'
+  request.session['accesobod'] = 'NINGUNO'
+  request.session['accesocos'] = 'NINGUNO'
+             
   return HttpResponse(template.render())
 
 def cerrar_sesion(request):
@@ -26,6 +31,7 @@ def logear(request):
       contra = form.cleaned_data.get("password")
       usuario=authenticate(username=nombre_usuario,password=contra)
       if usuario is not None:
+      
         login(request, usuario)
         return redirect('main')
       else:

@@ -53,7 +53,8 @@
 
 
 
-<h2>CAPTURA DE cosecha diario de la semana actual :{{sema_asi}} - {{sema_anio}} </h2>
+
+<h2>CAPTURA DE cosecha diario semana actual :{{sema_asi}} - {{sema_anio}} {{ nombreusu}} {{accesousu}}</h2>
 <p align='right' >total de captura :</p><p align = 'right' id="mensaje">Total de captura </p>
 
 {% load static %}
@@ -65,6 +66,11 @@
 
 
  {% endif %} 
+
+{% if accesocos == 'SI' or user.username == 'USERINVITADO' %} 
+<a class="btn btn-info "  href="#' %" role="button">Exportar CSV</a>
+<a class="btn btn-info" href="#' %" role="button">Exportar ins PDF</a>
+<a class="btn btn-info"  href="saldos_cosecha" role="button">Saldos Fruta </a>
 
  {% if asignado == 'azul' %}
     
@@ -128,7 +134,8 @@
 
  <p >{{ listanombre }}</p>
 
-<form class="formulario-horizontal" method="POST" action="">
+{% if user.username == 'USERINVITDO' %}
+ <form class="formulario-horizontal" method="POST" action="">
                          
     {% csrf_token %}
   
@@ -161,15 +168,6 @@
     <button type="submit">Guardar</button>
 </form>
 
-
-
-
- 
- 
-<a class="btn btn-info "  href="#' %" role="button">Exportar CSV</a>
-<a class="btn btn-info" href="#' %" role="button">Exportar ins PDF</a>
-<a class="btn btn-info"  href="saldos_cosecha" role="button">Saldos Fruta </a>
- 
  
 <table id="ejemplo_list" class="table table-striped ">
 
@@ -241,29 +239,29 @@
                 </tbody>
 </table>
 
+{% endif %}
+
             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
-            
+
+
+            {% else %}
+         
+                <h1>NECESITA AUTENTIFICAR UN USUARIO </h1>
+    <p>Lo sentimos, la página que buscas es con CREDENCIALES CORRECTAS .</p>
+
+            {% endif %}           
  <a class="btn btn-secondary" href="/diariocosechas/" role="button">Anterior </a>          
             
+<script>
+new DataTable('#ejemplo_list');
+</script>
 
 
 
 
-  <script type="text/javascript">
-
-        new DataTable('#ejemplo_list',{
-            layout: {
-        top9Start: {
-            div: {
-                className: 'layout-start',
-                text: 'Paginado'
-            }
-        },},},
-        )
-    </script>
 
     <script>
         document.getElementById('miBotonJS').addEventListener('click', function() {

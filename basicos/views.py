@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import calendario,uempaque,ucosecha,actual
 from django.db.models import Avg, Count, Min, Sum
 #from cosechas.models import diacosechas
+from usuarios.models import diusuarios
 from django.views.generic import ListView,CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -61,6 +62,52 @@ def grabaactual(request):
     context = {'mensaje':mensaje}
     return render(request, 'calendario.html', context)
 
+def usuactualiza(request):
+    anio_actual = datetime.date.today().year
+    anio_inicio = anio_actual-5
+    tupla_vacia=[anio_inicio]
+    tupla_empaque=uempaque.objects.all()
+    for i in range(anio_inicio+1, anio_actual+1):
+       tupla_vacia.append(str(i))
+   
+    context = {'anexo':tupla_vacia,'anexo2':tupla_empaque}  
+    return render(request, 'usuactual.html', context)
+
+def grabausuario(request):
+    estamos=actual.objects.filter(usuario=request.user)
+    aqui=0
+    aniog = request.POST['usuario']
+    semanag = request.POST['password']
+    calenda=diusuarios.objects.filter(abreviatura=semanag,nombre=aniog)
+    
+    if calenda.exists():
+            
+       
+            for estaaqui in calenda:
+                regis=estaaqui.acceso
+                gnombreusu = estaaqui.nombre
+                gaccesousu = estaaqui.acceso
+            mensaje="correcto"
+            request.session['nombreusu'] = gnombreusu
+            request.session['accesousu'] = gaccesousu
+            if gaccesousu=="B" :
+                accesobodx="SI"
+                accesocosx="NO"
+                request.session['accesobod'] = accesobodx
+                request.session['accesocos'] = accesocosx
+               
+            if gaccesousu=="R" :
+                accesocosx="SI"
+                accesobodx="NO"
+                request.session['accesocos'] = accesocosx
+                request.session['accesobod'] = accesobodx
+                            
+            
+    else :
+            mensaje="NO APLICA EL USUARIO INEXISTENTE O PASSWORD INCORRECTO  " + str(aniog)
+                
+    context = {'mensaje':mensaje}
+    return render(request, 'calendario.html', context)
 
 
 def anios(request):
@@ -220,8 +267,11 @@ def empacadoras(request):
   if request.user.is_staff:
     # Allow access to internal dashboard
     empacadora=0
+    mymembers = uempaque.objects.all()
+  else :    
 
-  mymembers = uempaque.objects.all()
+      mymembers = uempaque.objects.filter(usuario=request.user)
+      
   mycosechas = ucosecha.objects.all()
   #mymembers="santa fe,esmeralda,bondad,romina,cahua,lupita"
   
@@ -250,12 +300,12 @@ def grabauemp(request):
         nombreue=request.POST['nombre_ue']
         abreviaue=request.POST['abrevia_ue']
         #registro = uempaque.objects.get(pk=pk)
-        nuevo_objeto = uempaque(nombre=nombreue,abreviatura=abreviaue)
+        nuevo_objeto = uempaque(nombre=nombreue,abreviatura=abreviaue,usuario=request.user)
         nuevo_objeto.save()    
 
         
         mymembers="CATALOGO GENERAL DE EMPACADORAS "
-        mymembers2 = uempaque.objects.all().order_by('-id').values()[:5]
+        mymembers2 = uempaque.objects.filter(usuario=request.user).order_by('-id').values()[:5]
         anexo2=mymembers2
         messages.info(request, "Los DATOS DE LA UNIDAD EMPAQUE FUERON GRABADOS CORRECTAMENTE.")
      context = {'anexo':mymembers,'anexo2':anexo2}      

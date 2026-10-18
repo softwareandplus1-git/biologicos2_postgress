@@ -11,7 +11,7 @@
 
 
 
-<h2>CAPTURA DE ENCINTADO  semana actual :{{sema_asi}} - {{sema_anio}} </h2>
+<h2>CAPTURA DE ENCINTADO  semana actual :{{sema_asi}} - {{sema_anio}} {{ nombreusu}} {{accesousu}} </h2>
 
 {% load static %}
 
@@ -22,6 +22,9 @@
 
 
  {% endif %} 
+ 
+ {% if accesobod == 'SI' or user.username == "USERINVITADO" %} 
+     
 
  {% if asignado == 'azul' %}
     
@@ -87,6 +90,7 @@
 
 
 
+{% if accesobod == 'SI' %} 
 
  <form method="post">
 
@@ -94,13 +98,15 @@
     {{ form.as_p }}
     <button type="submit">Enviar</button>
 </form>
+{% endif %} 
  
 <a class="btn btn-info "  href="listado" role="button">Listado General</a>
+ 
 <a class="btn btn-info" href="#' %" role="button">Exportar ins PDF</a>
 <a class="btn btn-info"  href="saldos" role="button">Saldos Fruta in PDF</a>
  
-
-<table id="ejemplo_list" class="table table-striped ">
+{% if accesobod == 'SI' %}
+ <table id="ejemplo_list" class="table table-striped ">
 
                 <thead>
                     <tr bgcolor="#bee5eb">
@@ -145,13 +151,22 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-</table>
-            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+ </table>
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+
+    
+
+            {% else %}
+
+                <h1>NECESITA AUTENTIFICAR UN USUARIO </h1>
+    <p>Lo sentimos, la página que buscas es con CREDENCIALES CORRECTAS .</p>
+{% endif %}
             
- <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
+ <a class="btn btn-secondary" href="/embolse/" role="button">Inicio</a>          
             
 
 

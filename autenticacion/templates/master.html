@@ -8,20 +8,86 @@
   <title>S_AND_PLUS BIO.0.0.1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="\static\autenticacion\css\miestilo.css">
+   
 
   <title>{% block title %}{% endblock %}</title>
 </head>
+<style type="text/css">
+     /* Estilo interno */
+    body {
+      font-family: sans-serif; /* Usa una fuente sans-serif por defecto */
+      margin: 20px;
+       background-color: #d8da3d 
+    }
+    h1 {
+      color: navy; /* Título de color azul marino */
+    }
+    .importante {
+      font-weight: bold; /* Texto en negrita */
+      color: rgb(45, 21, 21); /* Texto rojo oscuro */
+    }
+    p::first-line {
+      font-style: italic; /* La primera línea del párrafo será cursiva */
+     
+      color: blue; /* El texto de todos los párrafos será azul */
+    }
+
+    ul {
+  list-style-type: square;
+  margin: 0;
+  padding: 0;
+  background-color: #1b6e30;
+  display: flex;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #a93434;
+}
+
+tr {
+    border-bottom: 2px solid #dddddd;
+}
+
+td {
+    padding: 12px 15px; /* Espaciado interno en las celdas */
+}
+
+
+
+  </style>
+
 <body>
   <h1>Reporte de Inventarios Biologicos </h1>
-   <ul>
-  <li><a href="/" class="active">Home</a></li>
-  <li><a href="/anios/">Calendario</a></li>
-  <li><a href="/empacadoras/">unidades de Empaque</a></li>
-  <li><a href="/cosechas/">unidades de Cosecha</a></li>
-  <li><a href="/embolse/">Digitalizacion de Embolses</a></li>
-  <li><a href="/diariocosechas/">Digitalizacion de Cosecha Diaria </a></li>
+ {% if user.username == 'USERINVITADO' %}
+  <ul>
 
+      <li><a href="/anios/">Calendarios</a></li>
+      <li><a href="/embolse/">Embolses</a></li>
+       <li><a href="/diariocosechas/">Saldos Encintados </a></li>
+  </ul>
+{% else %}
+  
+  <ul>
+
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/anios/">Calendario</a></li>
+    <li><a href="/empacadoras/">unidades de Empaque</a></li>
+    <li><a href="/cosechas/">unidades de Cosecha</a></li>
+    <li><a href="/cajas/">Calidades (empaque)</a></li>
+    
+    <li><a href="/embolse/">Digitalizacion de Encintados</a></li>
+    <li><a href="/diariocosechas/">Digi Cosecha Diaria </a></li>
+
+    <li><a href="/empaques/">Digi Empaque Diario </a></li>
+ <li><a href="/usuarios/">Usuarios</a></li>
+  {% endif %}    
 
   
 
@@ -33,13 +99,15 @@
 {% if user.is_authenticated %}
     <p>Hi, {{user.username}} :)</p>
     {% if user.is_superuser %}
-       <a href="{%url 'registro' %}" >Dar altas Nuevos USUARIOS </a>
+       <a href="{%url 'registro' %}" >Dar altas Nuevos Administradores  </a>
     {% endif %}
      <a class="btn btn-primary" href="/actual/" role="button">Actualiza semana</a>
-     <li style="float:right"><a href = "{% url 'cerrar_sesion' %}"">Cerrar Sesion </a></li>
+     <a class="btn btn-primary" href="/usuactual/" role="button">Autentificacion del Usuario </a>
+     
+     <li style="float:right"><a href = "{% url 'cerrar_sesion' %}">Cerrar Sesion </a></li>
 {% else %}
     <p>You are not logged in  {{user.userfirstname}} </p>
-    <a href="{%url 'logear' %}" >AUTENTIFICATE PARA OBTENER DATOS </a>
+    <a href="{%url 'logear' %}" >ADMINISTRADOR FAVOR DE AUTENTIFICARSE PARA OBTENER DATOS </a>
 
 
 {% endif %}

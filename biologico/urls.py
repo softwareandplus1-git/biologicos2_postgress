@@ -23,5 +23,9 @@ urlpatterns = [
     path('', include('basicos.urls')),
     path('', include('embolses.urls')),
     path('', include('cosechas.urls')),
+    path('', include('usuarios.urls')),
+    path('', include('cajas.urls')),
+    path('', include('empaques.urls')),
+        
       
 ]

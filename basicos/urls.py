@@ -16,7 +16,10 @@ urlpatterns = [
 
      path('actual/',views.actualiza, name='actual'),
      path('grabaactual/',views.grabaactual, name='grabaactual'),
-   
+
+     path('usuactual/',views.usuactualiza, name='usuactual'),
+     path('grabausuario/',views.grabausuario, name='grabausuario'),
+     
      path('empacadoras/', views.empacadoras, name='empacadoras'),
      path('empacadoras/agrega/', views.empacadoraspro, name='agregaemp'),
      path('grabauemp/',views.grabauemp),

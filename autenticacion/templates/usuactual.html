@@ -1,0 +1,48 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<h3>{{nombreusu}}</h3>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
+
+
+
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+   
+   <form action="/grabausuario/" method="POST">
+                Usuario
+                <input type="text" name="usuario"  style="width:100px" / >
+                PASSWORD
+                <input type="password" name="password" style="width:100px" / >
+                 
+        <input type="submit" value="Aceptar ">
+        <input type="reset" value="Borrar información">
+        {% csrf_token %}
+    </form>
+  
+   
+
+  
+
+<a class="btn btn-secondary" href="/empacadoras" role="button">ANTERIOR</a>
+
+ {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+
+{% endblock  %}
+
+ 

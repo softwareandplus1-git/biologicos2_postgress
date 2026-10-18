@@ -1,0 +1,326 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+ <style>
+        /* Estilos para el formulario horizontal */
+        .formulario-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 54px; /* Espacio entre los elementos */
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 68px;
+            max-width: 600px;
+        }
+
+        .campo-grupo {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Espacio entre la etiqueta y el input */
+        }
+
+        .formulario-horizontal label {
+            font-weight: bold;
+        }
+
+        .formulario-horizontal input {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+
+        .formulario-horizontal button {
+            padding: 2px 45px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .formulario-horizontal button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+<body>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/biologico/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+	 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+
+
+
+
+<h2>CAPTURA DE EMPAQUE diario semana actual :{{sema_asi}} - {{sema_anio}} {{ nombreusu}} {{accesousu}}</h2>
+<p align='right' >total de captura :</p><p align = 'right' id="mensaje">Total de captura </p>
+
+{% load static %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css ">
+
+ {% if  user.is_superuser %} 
+
+
+ {% endif %} 
+
+{% if accesocos == 'SI' or user.username == 'USERINVITADO' %} 
+<a class="btn btn-info "  href="#' %" role="button">Exportar CSV</a>
+<a class="btn btn-info" href="#' %" role="button">Exportar ins PDF</a>
+<a class="btn btn-info"  href="saldos_cosecha" role="button">Saldos Fruta </a>
+
+ {% if asignado == 'azul' %}
+    
+    <h2 style="background-color: blue;">{{ asignado }} </h2>
+
+{% endif %}
+
+{% if asignado == 'roja' %}
+    
+    <h2 style="background-color: rgb(255, 0, 0);">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'amarilla' %}
+    
+    <h2 style="background-color: yellow;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'negra' %}
+    
+    <h2 style="background-color: black;">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'gris' %}
+    
+    <h2 style="background-color: gray;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'verde' %}
+    
+    <h2 style="background-color: green;">{{ asignado }}</h2>
+
+{% endif %}
+
+ {% if asignado == 'lila' %}
+    
+    <h2 style="background-color: rgb(163, 11, 163);">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'cafe' %}
+    
+    <h2 style="background-color: brown;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'blanca' %}
+    
+    <h2 style="background-color: white;">{{ asignado }}</h2>
+
+{% endif %}
+
+{% if asignado == 'naranja' %}
+    
+    <h2 style="background-color: orange;">{{ asignado }}</h2>
+
+{% endif %}
+
+ <p >{{ listanombre }}</p>
+
+{% if user.username == 'USERINVITDO' %}
+ <form class="formulario-horizontal" method="POST" action="">
+                         
+    {% csrf_token %}
+  
+                  {% for field in form %}
+                    <div class="campo-formulario">
+                        <!-- Etiqueta del campo -->
+                        
+                        <label for="{{ field.id_for_label }}" >  {{ field.label }} </label>
+                    
+                        <!-- Campo dinámico (input, select, textarea, etc.) -->
+                        <tr><td> {{ field }} </td></tr>
+                    
+                        <!-- Mostrar errores del campo específico, si existen -->
+                        {% if field.errors %}
+                            <ul class="errores">
+                                {% for error in field.errors %}
+                                    <li class="error-texto">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        
+                        <!-- Texto de ayuda debajo del campo -->
+                        {% if field.help_text %}
+                            <small class="help-text">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+               
+
+    <button type="submit">Guardar</button>
+</form>
+
+ 
+<table id="ejemplo_list" class="table table-striped ">
+
+                <thead>
+                    <tr bgcolor="#bee5eb">
+                       
+
+                        <th class="text-center" width="20%">Unidad De cosecha</th>
+                        <th class="text-left" width="10%">Dia semana</th>
+                        <th class="text-center" width="10%">Color</th>
+                        <th class="text-center" width="10%">Encintado</th>
+                        
+                        <th class="text-center" width="20%">ACCIONES </th>
+                       
+                    </tr>
+                </thead>
+                 <tbody>
+                {% for ejemplo in mymembers  %}
+                    <tr class="text-center">
+                      
+                        
+                        <td align="left">{{ ejemplo.uncosecha.nombre }}</td>
+                        {% if ejemplo.diasemana == "1" %}
+                               <td>Domingo</td>
+                        {% endif %}
+                        {% if ejemplo.diasemana == "2" %}
+                               <td>Lunes</td>
+                        {% endif %}
+                        {% if ejemplo.diasemana == "3" %}
+                               <td>Martes</td>
+                        {% endif %}
+                         {% if ejemplo.diasemana == "4" %}
+                               <td>Miercoles</td>
+                        {% endif %}
+                       
+                        {% if ejemplo.diasemana == "5" %}
+                               <td>Jueves</td>
+                        {% endif %}
+
+                         {% if ejemplo.diasemana == "6" %}
+                               <td>Viernes</td>
+                        {% endif %}
+                         {% if ejemplo.diasemana == "7" %}
+                               <td>Sabado</td>
+                        {% endif %}
+                       
+                       
+                       
+                        <td>{{ ejemplo.color }}</td>
+                        <td class="bolsas">{{ ejemplo.bolsas }}</td>
+                       
+                       
+                        <td>
+            <!-- Botón para acción JavaScript -->
+        
+             
+            
+             
+             <a href="{{ejemplo.id}}/borrar" title="borrar" type="button" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas borrar este producto?',);">
+ Borrar
+</a>
+           
+
+           </td>
+                      
+                       
+                    </tr>
+                {% endfor %}
+                </tbody>
+</table>
+
+{% endif %}
+
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+
+
+            {% else %}
+         
+                <h1>NECESITA AUTENTIFICAR UN USUARIO </h1>
+    <p>Lo sentimos, la página que buscas es con CREDENCIALES CORRECTAS .</p>
+
+            {% endif %}           
+ <a class="btn btn-secondary" href="/diariocosechas/" role="button">Anterior </a>          
+            
+<script>
+new DataTable('#ejemplo_list');
+</script>
+
+
+
+
+
+    <script>
+        document.getElementById('miBotonJS').addEventListener('click', function() {
+            alert('¡Has hecho clic en el botón de JS!');
+        });
+
+        document.getElementById('eliminar').addEventListener('click', function() {
+            alert('¡Has hecho clic en el eliminar  JS!');
+            
+        });
+    </script>
+
+    <script>
+   document.querySelector('.clase-clic').addEventListener('mousemove', saludar);
+
+   
+
+   function saludar() {
+            let totalcantidad = 0;
+            document.querySelectorAll('.valor-dinamico').forEach(input => {
+            let valor = parseFloat(input.value) || 0;
+            totalcantidad += valor;
+        });
+            document.getElementById('mensaje').textContent = totalcantidad;
+    }
+          
+
+            
+
+        
+        
+   
+
+    </script>
+
+     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let totalCantidad = 0;
+           
+            
+            // Seleccionar filas del tbody
+            const filas = document.querySelectorAll("#ejemplo_list tbody tr");
+            
+
+            filas.forEach(fila => {
+                // Obtener valores específicos de las columnas (índice 0 es la primera columna)
+                const valorCantidad = parseInt(fila.cells[3].textContent) || 0;
+              
+                totalCantidad += valorCantidad;
+               
+            });
+
+            // Mostrar resultados en el tfoot
+            document.getElementById("mensaje").textContent = totalC2antidad;
+          
+        });
+    </script>
+
+    
+   
+
+{% endblock %}

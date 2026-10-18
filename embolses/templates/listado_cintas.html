@@ -26,14 +26,17 @@
 <table id="semana_list" class="table table-striped ">
 
                 <thead>
-                    <tr bgcolor="#bee5eb">
-                        <th class="text-center">#</th>
-                        <th class="text-left" width="10%">semana</th>
-                        <th class="text-center" width="10%">Color</th>
-                         {% for ccolo in mymembers  %}
-                           <th class="text-center" width="10%">{{ccolo}} </th>
-                           {% endfor %} 
-                       
+                   <tr class="table-info border-bottom border-2 text-secondary">
+                    <th class="text-center py-3" scope="col">#</th>
+                    <th class="text-start py-3" scope="col">Semana</th>
+                    <th class="text-center py-3" scope="col">Color</th>
+                    {% for ccolo in mymembers %}
+                        <th class="text-center py-3" scope="col">{{ ccolo }}</th>
+                    {% endfor %}
+                    <th class="text-center py-3" scope="col">ACCIONES</th>
+
+                    </tr>
+    
                        
                     </tr>
                 </thead>
@@ -64,7 +67,7 @@
                        
                         <td>
             <!-- Botón para acción JavaScript -->
-           {% if  user.is_superuser %} 
+            {% if  user.is_superuser %} 
              
              <a href="{{ejemplo.id}}/editar" title="editar" type="button" class="btn btn-success">Editar </a>    
              
@@ -72,7 +75,8 @@
  Borrar
 </a>
             {% else %} 
-                <p>SIN ACCIONES </p>
+             <a href="#" title="sinacciontes" type="button" class="btn btn-success">SIN ACCIONES</a>    
+    
             {% endif %}   
 
            </td>
@@ -86,8 +90,32 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
             <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+
+
+            <script>
+  $(document).ready(function () {
+    $('#semana_list').DataTable({
+      "pageLength": 10, // Número de filas por página por defecto
+      "language": {
+        "lengthMenu": "Mostrar _MENU_ registros por página",
+        "zeroRecords": "No se encontraron resultados",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+        "search": "Buscar:",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        }
+      }
+    });
+  });
+</script>
+
             
- <a class="btn btn-secondary" href="/" role="button">Inicio</a>          
+ <a class="btn btn-secondary" href="/embolse/" role="button">Inicio</a>          
             
 
 

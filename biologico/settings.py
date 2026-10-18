@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8(16wwypv1oonrl37#_knqbzh0)240vp4@$%ew3m^oucpubq%2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
      'basicos',
      'embolses',
      'cosechas',
+     'usuarios',
+     'cajas',
+     'empaques',
   ]
 
 MIDDLEWARE = [
@@ -65,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'basicos.context_processors.utilidades_globales',
             ],
         },
     },
@@ -79,10 +83,10 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME','biologico'),
-        'USER': os.getenv('DB_USER','postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST','localhost'),
+        'NAME': 'biologico',
+        'USER': 'postgres',
+        'PASSWORD': 'CHILANGO2012',
+        'HOST': 'localhost',
         'PORT': '5432',
     }}
 
@@ -122,3 +126,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# settings.py
+
+# 1. Expira la sesión en cuanto el usuario cierra el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# 2. Configura un tiempo de expiración corto (en segundos) si están inactivos 
+# Por ejemplo, 3600 segundos = 1 hora de inactividad antes de borrar todo
+SESSION_COOKIE_AGE = 3600  
+
+# 3. Guarda la sesión en cada petición para asegurar que el contador de inactividad se reinicie
+SESSION_SAVE_EVERY_REQUEST = True

@@ -5,6 +5,7 @@ import datetime
 from django.contrib import messages
 from .models import embolses
 from basicos.models import ucosecha,calendario,actual
+from usuarios.models import diusuarios
 from datetime import datetime, timedelta
 from datetime import date
 from django.views.generic import ListView,CreateView, DeleteView, UpdateView
@@ -28,10 +29,13 @@ def embolse(request):
     for actualiza1 in actualiza:
         colorin=actualiza1.actual_semana
         coloriy=actualiza1.actual_anio
-
+ 
+    nombrecaptura=request.session['nombreusu'] 
+    ucaptura=diusuarios.objects.filter(nombre=nombrecaptura)
+    for ucap in ucaptura:
+        claveusu=ucap.id
     
-          
-
+    
     ahora =  datetime.now()
     formato = "%Y-%m-%d"
     limiteii = ahora - timedelta(days=300)
@@ -60,7 +64,7 @@ def embolse(request):
         nanio=form.data['your_ucosecha']
         
         nanie=ucosecha.objects.get(pk=nanio)
-        
+        claveuok=diusuarios.objects.get(pk=claveusu)
         
         if form.is_valid() :
            estamos = embolses.objects.filter(semana=colorin,anio=coloriy,uncosecha=nanie)
@@ -86,7 +90,9 @@ def embolse(request):
                         usuario=request.user,
                         fecha=ahora,
                         bolsas=form.data['your_cantidad'],
-                        uncosecha=nanie
+                        uncosecha=nanie,
+                        uncapturista=claveuok,
+                        
            )
            
           # nuevo_usuario.save()
@@ -302,23 +308,6 @@ def saldosfruta(request):
                       for ninguno in ninguna:
                            nombre_ucosecha15.append(ninguno.id)
                            bolsas_ucosecha15.append(0)
-                     
-                   
-
-           
-       
-   
-    
-        
-        
-        
-        
-        
-       
-        
-       
-
-    
        
         nombreucosecha=[]
         bolsasucosecha=[]
@@ -375,14 +364,6 @@ def saldosfruta(request):
                    quinces[unidad.nombre]=bolsas15
                    
                 vlta=vlta+1       
-            
-                  
-                   
-                   
-                
-                  
-
-       
         
     gran_tota=[]
     gran_vlta=0
@@ -451,16 +432,23 @@ def listado(request):
     mensaje="estamos en lista de embolses"
     colorin=0
     coloriy=0
-   
+    usernameok = request.user.username
     actualiza=actual.objects.filter(usuario=request.user)
     
     for actualiza1 in actualiza:
         colorin=actualiza1.actual_semana
         coloriy=actualiza1.actual_anio
+
     if not request.user.is_superuser:
-       result = embolses.objects.values('uncosecha','semana').filter(usuario=request.user,anio=coloriy).annotate(total_bolsas=Sum('bolsas'))
+       if usernameok == 'USERINVITADO' :
+
+           result = embolses.objects.values('uncosecha','semana').filter(anio=coloriy).annotate(total_bolsas=Sum('bolsas'))
+           mymembers=ucosecha.objects.all()   
+             
+       else :       
+            result = embolses.objects.values('uncosecha','semana').filter(usuario=request.user,anio=coloriy).annotate(total_bolsas=Sum('bolsas'))
     #print ('grupos',result)
-       mymembers=ucosecha.objects.filter(usuario=request.user)   
+            mymembers=ucosecha.objects.filter(usuario=request.user)   
     else :
        result = embolses.objects.values('uncosecha','semana').filter(anio=coloriy).annotate(total_bolsas=Sum('bolsas'))
   
